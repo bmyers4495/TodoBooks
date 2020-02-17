@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-// import TodoStacks from './TodoStacks';
 import Expand from 'react-expand-animated';
-import {NotesDiv} from '../styles/NoteStyles'
+import Styled from 'styled-components';
+
+
 
 export class Notes extends Component {
     componentDidUpdate(){
@@ -20,5 +21,13 @@ export class Notes extends Component {
         )
     }
 }
+
+const NotesDiv = Styled.div`
+    height:100%;
+    position:absolute;
+    display:inline-block;
+    margin:10px;
+    top:50px;
+`;
 
 export default Notes

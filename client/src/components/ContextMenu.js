@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { MenuDiv, MenuList, MenuItem } from '../styles/ContextMenuStyle'
+import Styled from 'styled-components';
 
 export class ContextMenu extends Component {
     constructor(props) {
@@ -9,26 +9,32 @@ export class ContextMenu extends Component {
             x: 0,
             y: 0,
         }
-
-
+    }
+    _handleContext = e =>{
+        var clickx = e.clientX;
+        var clicky = e.clientY
+            e.preventDefault()
+            this.setState((prevState) => ({
+                contextMenu: !prevState.contextMenu,
+                x: clickx,
+                y: clicky,
+            }))
+    }
+    _handleClick = e =>{
+        this.setState({
+            contextMenu: false,
+            x:0,
+            y:0,
+        })
     }
     componentDidMount() {
-        document.addEventListener('contextmenu', e => {
+        document.addEventListener('contextmenu', this._handleContext)
+        document.addEventListener('click', this._handleClick)
 
-            var clickx = e.clientX;
-            var clicky = e.clientY
-            var target = e.target;
-            var parent = e.target.parentNode;
-            var content = document.getElementsByClassName("content");
-            
-                e.preventDefault()
-                this.setState((prevState) => ({
-                    contextMenu: !prevState.contextMenu,
-                    x: clickx,
-                    y: clicky,
-                }))
-        })
-
+    }
+    componentWillUnmount(){
+        document.removeEventListener('contextmenu', this._handleContext)
+        document.removeEventListener('click', this._handleClick)
     }
     componentDidUpdate() {
         const menu = document.getElementById('menuDiv');
@@ -54,5 +60,34 @@ export class ContextMenu extends Component {
         )
     }
 }
+
+const MenuDiv = Styled.div.attrs({
+    id:"menuDiv"
+})`
+    position:absolute;
+    background:grey;
+    z-index: 10;
+    visibility: 0;
+    height:auto;
+    width:auto;
+    text-align:center;
+    display:none;
+`;
+
+const MenuList = Styled.ul`
+    list-style:none;
+    margin:0;
+    padding:0;
+
+
+`;
+const MenuItem = Styled.li`
+    border-bottom:1px solid black;
+    &:hover{
+        cursor:pointer;
+        background-color:blue;
+    }
+`;
+
 
 export default ContextMenu

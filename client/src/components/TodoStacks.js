@@ -1,66 +1,22 @@
 import React, { Component } from 'react';
-import { ContentDiv, Content } from '../styles/SideBarStyles';
-import { MenuDiv, MenuList, MenuItem } from '../styles/ContextMenuStyle'
+import {ContextMenu} from './ContextMenu'
+import Styled from 'styled-components'
 
 export class TodoStacks extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            open: false,
-            contextMenu: false,
-        }
-        this.createBook = this.createBook.bind(this);
-        this._handleClick = this._handleClick.bind(this);
-        this._handleContext = this._handleContext.bind(this);
-        this.showContext = this.showContext.bind(this);
-    }
-    componentDidMount() {
-        window.addEventListener('contextmenu', this._handleContext)
-        window.addEventListener('click', this._handleClick)
-    }
-    componentWillUnmount(){
-        window.removeEventListener("contextmenu", this._handleContext)
-        window.removeEventListener("click", this._handleClick)
-
-    }
-    showContext = e => {
-        const cMenu = document.getElementById("menuDiv");
-        if (this.state.contextMenu) {
-            e.preventDefault();
-            cMenu.style.display = "inline-block";
-        }
-    }
-    _handleClick(){
-        this.setState({contextMenu: false,})
-        const cMenu = document.getElementById("menuDiv");
-        if (cMenu !== null){
-        cMenu.style.display = "none";}
-    }
-    _handleContext(){
-
-            this.setState(prevState => ({
-                contextMenu: !prevState.contextMenu,
-            }))
-    }
-    createBook(item) {
+    
+    renderBook(item) {
         return (
             <Content
                 key={item.key} className="content" >
                 <h2>{item.text.name}</h2>
                 <i>type:{item.text.type}</i>
-                <MenuDiv>
-                    <MenuList>
-                        <MenuItem>Add</MenuItem>
-                        <MenuItem>Delete</MenuItem>
-                        <MenuItem>Expand</MenuItem>
-                    </MenuList>
-                </MenuDiv>
+                <ContextMenu />
             </Content>
         )
     }
     render() {
         var items = this.props.entries;
-        var listedItems = items.map(this.createBook)
+        var listedItems = items.map(this.renderBook)
 
 
         return (
@@ -74,5 +30,50 @@ export class TodoStacks extends Component {
         )
     }
 }
+
+const ContentDiv = Styled.ul`
+    display:block;
+    background-color: white;
+    width:90%;
+    margin:auto;
+    top:20px;
+    height:90%;
+    overflow-x:scroll;
+    position:absolute;
+    padding-left:0;
+    z-index:1;
+    
+    &::-webkit-scrollbar {
+        display: block;
+        width: .3em;
+        overflow: auto;
+        height: 0;
+    }
+ 
+    &::-webkit-scrollbar-track {
+        width: 0px;
+        height: 0px;
+        background-color: #aaa; /* or add it to the track */
+    }
+ 
+    &::-webkit-scrollbar-thumb {
+        background: #000; 
+    }
+    h2{
+        margin-top:10px;
+        margin-bottom:10px;
+    }
+    i{
+
+        width:100%;
+    }
+`;
+
+const Content = Styled.li`
+    list-style: none;
+    display:block;
+    border-bottom:1px solid grey;
+`;
+
 
 export default TodoStacks
