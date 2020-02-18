@@ -1,34 +1,35 @@
-import React, { Component } from 'react';
-import {ContextMenu} from './ContextMenu'
+import React, { Component } from 'react'
+import { ContextMenu } from './ContextMenu'
 import Styled from 'styled-components'
 
 export class TodoStacks extends Component {
-    
-    renderBook(item) {
-        return (
-            <Content
-                key={item.key} className="content" >
-                <h2>{item.text.name}</h2>
-                <i>type:{item.text.type}</i>
-                <ContextMenu />
-            </Content>
-        )
-    }
-    render() {
-        var items = this.props.entries;
-        var listedItems = items.map(this.renderBook)
+  renderBook= (item)=> {
+    return (
+      <Content key={item.key} className="content">
+        <h2>{item.text.name}</h2>
+        <i>type:{item.text.type}</i>
+	<ContextMenu node={ this.node }/>
+      </Content>
+    )
+  }
+  render() {
+    var items = this.props.entries
+    var listedItems = items.map(this.renderBook)
 
-
-        return (
-            <React.Fragment>
-                <ContentDiv >
-                    <div className={"todoBook"} onClick={() => this.props.toggleNotes(items.key)} onContextMenu={this.showContext}>
-                        {listedItems}
-                    </div>
-                </ContentDiv>
-            </React.Fragment>
-        )
-    }
+    return (
+      <React.Fragment>
+        <ContentDiv>
+          <div
+            className={'todoBook'}
+            onClick={() => this.props.toggleNotes(items.key)}
+            ref={node => (this.node = node)}
+          >
+            {listedItems}
+          </div>
+        </ContentDiv>
+      </React.Fragment>
+    )
+  }
 }
 
 const ContentDiv = Styled.ul`
@@ -67,13 +68,12 @@ const ContentDiv = Styled.ul`
 
         width:100%;
     }
-`;
+`
 
 const Content = Styled.li`
     list-style: none;
     display:block;
     border-bottom:1px solid grey;
-`;
-
+`
 
 export default TodoStacks
