@@ -103,7 +103,7 @@ const AddDiv = Styled.div`
 const AddFormButton = Styled.button`
 
     display:inline-block;
-    margin-left: 10px;
+    margin-left: 60px;
     border-radius:50%;
     border: none;
     background-color: blue;

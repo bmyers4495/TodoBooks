@@ -11,6 +11,7 @@ export class ContextMenu extends Component {
     }
     this._handleClick = this._handleClick.bind(this)
   }
+
   _handleContext = e => {
     var clickx = e.clientX
     var clicky = e.clientY
@@ -23,6 +24,7 @@ export class ContextMenu extends Component {
       }))
     }
   }
+
   _handleClick = e => {
     this.setState({
       contextMenu: false,
@@ -30,14 +32,17 @@ export class ContextMenu extends Component {
       y: 0
     })
   }
+
   componentDidMount() {
     document.addEventListener('contextmenu', this._handleContext)
     document.addEventListener('click', this._handleClick)
   }
+
   componentWillUnmount() {
     document.removeEventListener('contextmenu', this._handleContext)
     document.removeEventListener('click', this._handleClick)
   }
+
   componentDidUpdate() {
     const menu = document.getElementById('menuDiv')
     if (this.state.contextMenu) {

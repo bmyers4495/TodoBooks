@@ -3,12 +3,12 @@ import { ContextMenu } from './ContextMenu'
 import Styled from 'styled-components'
 
 export class TodoStacks extends Component {
-  renderBook= (item)=> {
+  renderBook = item => {
     return (
       <Content key={item.key} className="content">
         <h2>{item.text.name}</h2>
         <i>type:{item.text.type}</i>
-	<ContextMenu node={ this.node }/>
+        <ContextMenu node={this.node} />
       </Content>
     )
   }
@@ -33,16 +33,14 @@ export class TodoStacks extends Component {
 }
 
 const ContentDiv = Styled.ul`
-    display:block;
-    background-color: white;
-    width:90%;
-    margin:auto;
-    top:20px;
-    height:90%;
-    overflow-x:scroll;
-    position:absolute;
-    padding-left:0;
-    z-index:1;
+	background-color:white;
+	width: 90%;
+	overflow-x: scroll;
+	position: relative;
+	height:100%;
+	padding-left: 0;
+	z-index: 1;
+	margin: 10px;
     
     &::-webkit-scrollbar {
         display: block;
@@ -73,7 +71,10 @@ const ContentDiv = Styled.ul`
 const Content = Styled.li`
     list-style: none;
     display:block;
-    border-bottom:1px solid grey;
+	border-bottom:1px solid grey;
+	h2{
+		margin-top:0
+	}
 `
 
 export default TodoStacks

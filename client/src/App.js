@@ -1,30 +1,29 @@
 import React, { Component } from 'react'
-import { TodoAdd } from './components/TodoAdd';
-import { Notes } from './components/Notes';
-import Styled, {createGlobalStyle} from 'styled-components'
-
+import { TodoAdd } from './components/TodoAdd'
+import { Notes } from './components/Notes'
+import Styled, { createGlobalStyle } from 'styled-components'
 
 export class App extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = { showBooks: false }
-    this.toggleNotes = this.toggleNotes.bind(this);
+    this.toggleNotes = this.toggleNotes.bind(this)
   }
-  toggleNotes = (key) => {
-    this.setState((prevState) => ({
-      showNotes: !prevState.showNotes,
+  toggleNotes = key => {
+    this.setState(prevState => ({
+      showNotes: !prevState.showNotes
     }))
-
   }
   render() {
-
     return (
       <React.Fragment>
         <GlobalStyle />
         <SideBar>
           <TodoAdd toggleNotes={this.toggleNotes} />
         </SideBar>
-        <Notes showNotes={this.state.showNotes} />
+	<TodoListDiv>
+	<Notes showNotes={this.state.showNotes} />
+	    </TodoListDiv>
       </React.Fragment>
     )
   }
@@ -32,14 +31,11 @@ export class App extends Component {
 
 const SideBar = Styled.div`
     background: linear-gradient(#aaa, #8f8fa5);
-    height:100%;
-    left:0;
-    bottom:0;
-    width:150px;
-    position:relative;
-    margin-right:0;
-    display:inline-block;
-`;
+	flex:1;
+	height:100%;
+	display:flex;
+	flex-direction:column;
+`
 
 const GlobalStyle = createGlobalStyle`
     html{
@@ -55,8 +51,14 @@ const GlobalStyle = createGlobalStyle`
         overflow-x:show;
         height:100%;
         width:100%;
+	display:flex;
+	flex-direction: row;
     }
-`;
+`
+
+const TodoListDiv = Styled.div`
+	height:100%;
+	flex:5;
+`
 
 export default App
-
